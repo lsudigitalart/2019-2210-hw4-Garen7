@@ -11,8 +11,8 @@ const spaceHeight = 2*innerHeight
 const spaceWidthStart = innerWidth/2 - spaceWidth/2
 const spaceHeightStart = innerHeight/2 - spaceHeight/2
 //astroids
-const numAstroids = 20
-const astroidMinSize = 5
+const numAstroids = 10
+const astroidMinSize = 20
 var astroids = []
 //score
 const scoreTextSize = 20
@@ -20,15 +20,18 @@ var score = 0
 //game over
 const gameOverTextSize = 40
 var gameOver = false
+//invincibility at the start
+const invincibilityFrames = 300
+var frameCount = 0
 
 class Astroid{
-  constructor(x, y, xVel, yVel, sizeooga){
+  constructor(x, y, xVel, yVel, size){
     this.x = x
     this.y = y
     this.xVel = xVel
     this.yVel = yVel
     this.c = color(random(256), random(256), random(256))
-    this.size = sizeooga
+    this.size = size
   }
 
   onDraw(){
@@ -57,13 +60,13 @@ class Astroid{
   }
 
   collisionCheck(){
-    return dist(playerX, playerY, this.x, this.y) < (this.size + hurtBoxSize)/2 && this.size != 0
+    return this.size != 0 && frameCount > invincibilityFrames && dist(playerX, playerY, this.x, this.y) < (this.size + hurtBoxSize)/2
   }
 
   destroy(){
-    if(size >= astroidMinSize){
-      astroids.push(new Astroid(random(spaceWidth), random(spaceHeight), random(2*speed)-speed, random(2*speed)-speed), this.size/2)
-      astroids.push(new Astroid(random(spaceWidth), random(spaceHeight), random(2*speed)-speed, random(2*speed)-speed), this.size/2)
+    if(this.size >= astroidMinSize){
+      astroids.unshift(new Astroid(this.x, this.y, random(2*speed)-speed, random(2*speed)-speed, this.size/2))
+      astroids.unshift(new Astroid(this.x, this.y, random(2*speed)-speed, random(2*speed)-speed, this.size/2))
     }
     this.size = 0 //bad
     score++
@@ -74,7 +77,7 @@ function setup(){
   createCanvas(innerWidth, innerHeight)
   //create the astroids
   for(var numAstroidsLeft = numAstroids; numAstroidsLeft > 0; numAstroidsLeft -= 1){
-    astroids.push(new Astroid(random(spaceWidth), random(spaceHeight), random(2*speed)-speed, random(2*speed)-speed), random(20)+30)
+    astroids.push(new Astroid(random(spaceWidth), random(spaceHeight), random(2*speed)-speed, random(2*speed)-speed, random(20)+40))
   }
 }
 
@@ -140,4 +143,5 @@ function playerControls(){
       a.xVel-=acceleration
     }
   }
+  frameCount++
 }
