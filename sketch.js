@@ -11,7 +11,7 @@ const spaceHeight = 2*innerHeight
 const spaceWidthStart = innerWidth/2 - spaceWidth/2
 const spaceHeightStart = innerHeight/2 - spaceHeight/2
 //astroids
-const numAstroids = 10
+const numAstroids = 40
 const astroidMinSize = 20
 var astroids = []
 //score
@@ -30,7 +30,7 @@ class Astroid{
     this.y = y
     this.xVel = xVel
     this.yVel = yVel
-    this.c = color(random(256), random(256), random(256))
+    this.c = color(100+random(150), 100+random(150), 256)
     this.size = size
   }
 
@@ -82,7 +82,7 @@ function setup(){
 }
 
 function draw(){
-  background(0, 0, 0, 25)
+  background(0, 0, 30, 25)
   //astroids
   noStroke()
   for(var a of astroids){
