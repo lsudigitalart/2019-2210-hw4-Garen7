@@ -11,7 +11,7 @@ const spaceHeight = 2*innerHeight
 const spaceWidthStart = innerWidth/2 - spaceWidth/2
 const spaceHeightStart = innerHeight/2 - spaceHeight/2
 //astroids
-const numAstroids = 40
+const numAstroids = 70
 const astroidMinSize = 20
 var astroids = []
 //score
